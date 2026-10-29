@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palabra2Reel · De una palabra a un reel terminado</title>
+<meta name="description" content="Palabra2Reel es una skill para Claude Code: investiga el tema, escribe el guion, dibuja la explicación, pone la voz y monta el vídeo vertical para Reels, TikTok y YouTube Shorts.">
+<meta property="og:title" content="Palabra2Reel · De una palabra a un reel terminado">
+<meta property="og:description" content="Una skill para Claude Code que convierte una palabra en un reel vertical con voz, subtítulos y sonido.">
+<meta property="og:image" content="media/demo-poster.jpg">
+<link rel="icon" href="media/logo-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf7;--ink:#14161a;--muted:#5d626c;--line:#e4e1d9;--soft:#f2f0ea;--acc:#2a54e8;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gut:20px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:76px}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
+header{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:10}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.word{font:600 18px var(--sans);letter-spacing:-.01em;text-decoration:none}
+nav{display:flex;gap:22px;align-items:center;font-size:15px;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--ink)}
+nav .hide-s{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:500 16px var(--sans);padding:13px 22px;border-radius:10px;text-decoration:none;border:1px solid var(--ink);cursor:pointer}
+.btn:hover{background:#2a2e36;color:#fff}
+.btn.sm{padding:8px 14px;font-size:14.5px;color:#fff}
+.btn.line{background:transparent;color:var(--ink);border-color:#c9c5ba}
+.btn.line:hover{background:var(--soft);color:var(--ink)}
+.hero{padding:48px 0 30px;display:grid;gap:40px}
+h1{font:400 clamp(44px,9vw,84px)/.98 var(--serif);letter-spacing:-.02em}
+.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:30em;margin:22px 0 28px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.fine{font-size:14px;color:var(--muted);margin-top:16px}
+.phone{justify-self:start;width:min(270px,70vw);aspect-ratio:9/16;border-radius:26px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative}
+.phone video{width:100%;height:100%;object-fit:cover;display:block}
+.phone button{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);color:var(--ink);border:0;border-radius:999px;padding:7px 13px;font:500 13px var(--sans);cursor:pointer}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.kicker{font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+h2{font:400 clamp(32px,5.4vw,50px)/1.04 var(--serif);letter-spacing:-.015em;max-width:16em}
+.sub{color:var(--muted);max-width:36em;margin-top:14px}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:34px}
+.gallery figure img{width:100%;display:block;border-radius:14px;border:1px solid var(--line);aspect-ratio:9/16;object-fit:cover}
+.gallery figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.rows{margin-top:30px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:20px 0;border-bottom:1px solid var(--line)}
+.row .n{font:500 14px var(--mono);color:var(--acc);padding-top:4px}
+.row h3{font:600 18px var(--sans);letter-spacing:-.01em}
+.row p{color:var(--muted);grid-column:2;max-width:42em}
+.two{display:grid;gap:34px}
+.list{border-top:1px solid var(--line)}
+.list li{list-style:none;padding:14px 0;border-bottom:1px solid var(--line)}
+.list b{font-weight:600}
+.list span{color:var(--muted)}
+pre{background:#14161a;color:#e9e7e1;border-radius:12px;padding:20px;font:14px/1.7 var(--mono);overflow:auto}
+pre i{color:#8f95a3;font-style:normal}
+.price{display:grid;gap:26px;align-items:start}
+.price .big{font:400 clamp(64px,12vw,104px)/1 var(--serif);letter-spacing:-.03em}
+.price .big small{font:400 17px var(--sans);color:var(--muted);letter-spacing:0;margin-left:8px}
+details{border-bottom:1px solid var(--line);padding:18px 0}
+details:first-of-type{border-top:1px solid var(--line);margin-top:28px}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";font:400 22px/1 var(--sans);color:var(--muted)}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:10px;max-width:44em}
+footer{border-top:1px solid var(--line);padding:28px 0 36px;font-size:14px;color:var(--muted)}
+footer a{color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,250,247,.96);border-top:1px solid var(--line);padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar span{font-size:14px;color:var(--muted);line-height:1.3}
+.bar b{color:var(--ink);font-weight:600}
+@media(min-width:820px){
+  body{padding-bottom:0}.bar{display:none}
+  nav .hide-s{display:inline}
+  .hero{grid-template-columns:1.25fr .75fr;align-items:center;padding:84px 0 56px}
+  .phone{justify-self:end;width:290px}
+  .gallery{grid-template-columns:repeat(4,1fr)}
+  .two{grid-template-columns:.9fr 1.1fr;gap:56px}
+  .price{grid-template-columns:1fr 1fr;gap:56px}
+  .row{grid-template-columns:60px 240px 1fr}.row p{grid-column:3}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="word" href="#">Palabra2Reel</a>
+    <nav><a class="hide-s" href="#como">Cómo funciona</a><a class="hide-s" href="#faq">Preguntas</a><a class="btn sm buy" href="#precio">Comprar · 19 €</a></nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>De una palabra a un reel terminado.</h1>
+      <p class="lead">Palabra2Reel es una skill para Claude Code. Investiga el tema, escribe el guion, dibuja la explicación, pone la voz y monta el vídeo vertical para Reels, TikTok y YouTube Shorts.</p>
+      <div class="actions">
+        <a class="btn buy" href="#precio">Comprar · 19 €</a>
+        <a class="btn line" href="#como">Ver cómo funciona</a>
+      </div>
+      <p class="fine">Pago único · IVA incluido · Español, inglés y portugués</p>
+    </div>
+    <div class="phone">
+      <video id="demo" src="media/demo.mp4" poster="media/demo-poster.jpg" muted loop playsinline preload="metadata" aria-label="Reel de demostración hecho con la skill"></video>
+      <button id="snd" type="button">Activar sonido</button>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Hecho con la skill</p>
+    <h2>Estos reels salieron de una palabra.</h2>
+    <p class="sub">Pulpo, avión, microondas, cebolla, olla exprés, hielo. Están publicados en @cositas.ai, con su voz, sus subtítulos y su sonido.</p>
+    <div class="gallery">
+      <figure><img src="media/g-pulpo.jpg" alt="Reel sobre el pulpo" loading="lazy"><figcaption>«Pulpo»</figcaption></figure>
+      <figure><img src="media/g-avion.jpg" alt="Reel sobre las ventanillas de los aviones" loading="lazy"><figcaption>«Avión»</figcaption></figure>
+      <figure><img src="media/g-microondas.jpg" alt="Reel sobre el microondas" loading="lazy"><figcaption>«Microondas»</figcaption></figure>
+      <figure><img src="media/g-cebolla.jpg" alt="Reel sobre la cebolla" loading="lazy"><figcaption>«Cebolla»</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <p class="kicker">Cómo funciona</p>
+    <h2>Seis pasos, y solo das el visto bueno al storyboard.</h2>
+    <div class="rows">
+      <div class="row"><span class="n">01</span><h3>Escribes una palabra</h3><p>«Pulpo», «cebolla», «tu cafetera». Sin guion previo ni plantillas que rellenar.</p></div>
+      <div class="row"><span class="n">02</span><h3>Busca y guarda las fuentes</h3><p>Rastrea la web, elige el ángulo que mejor se explica dibujado y anota la fuente de cada dato.</p></div>
+      <div class="row"><span class="n">03</span><h3>Ganchos y guion</h3><p>Escribe cuatro ganchos, elige el que más frena el scroll y redacta el guion de 45 a 90 segundos.</p></div>
+      <div class="row"><span class="n">04</span><h3>Dibuja y anima</h3><p>Ilustra el tema en vectores y mueve cada pieza justo cuando la voz la nombra. Agua, fuego o tentáculos se animan solos.</p></div>
+      <div class="row"><span class="n">05</span><h3>Voz y subtítulos</h3><p>Voz gratis o de ElevenLabs, subtítulos palabra a palabra y efectos de sonido.</p></div>
+      <div class="row"><span class="n">06</span><h3>Control de calidad y entrega</h3><p>Revisa formato, audio, imagen congelada y el primer segundo. Te entrega el MP4, la portada, los textos y las fuentes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div>
+      <p class="kicker">Qué recibes</p>
+      <h2>El método completo, no solo un generador.</h2>
+      <p class="sub">Con cada reel te llega todo lo necesario para publicarlo el mismo día.</p>
+    </div>
+    <div>
+      <pre><i># Lo que deja cada reel en entrega/</i>
+mi-reel.mp4          <i>1080×1920, audio normalizado</i>
+portada.jpg
+post-instagram.txt
+post-tiktok.txt
+post-youtube.txt
+fuentes.md</pre>
+      <ul class="list" style="margin-top:22px">
+        <li><b>Español, inglés y portugués.</b> <span>Un comando copia un reel a otro idioma y reutiliza el dibujo.</span></li>
+        <li><b>14 nichos con temas de arranque.</b> <span>Y cuando eliges uno, Claude te propone 30 ideas más con su gancho.</span></li>
+        <li><b>Siete estilos y el tuyo propio.</b> <span>Deja una imagen de referencia y Claude crea un estilo parecido.</span></li>
+        <li><b>Música original y transiciones.</b> <span>La música baja sola cuando habla la voz.</span></li>
+        <li><b>Guía de métricas.</b> <span>Qué mirar a las 48 horas de cada reel y qué cambiar.</span></li>
+        <li><b>Instalador.</b> <span>Un comando comprueba e instala lo necesario.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div>
+      <p class="kicker">Antes de comprar</p>
+      <h2>Lo que necesitas.</h2>
+    </div>
+    <ul class="list" style="margin-top:0">
+      <li><b>Claude Code</b> <span>con una suscripción de Claude o una clave de API. La skill funciona dentro de él.</span></li>
+      <li><b>Un ordenador</b> <span>con Node, Python y ffmpeg. El instalador lo comprueba y te dice qué falta. Disponible para Windows; la versión para Mac está en camino.</span></li>
+      <li><b>Voz</b> <span>gratis con edge-tts, o la de ElevenLabs si quieres subir de nivel.</span></li>
+      <li><b>Ningún conocimiento de programación.</b> <span>Le escribes a Claude en lenguaje normal.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="precio">
+  <div class="wrap price">
+    <div>
+      <p class="kicker">Precio</p>
+      <div class="big">19 €<small>pago único</small></div>
+      <p class="sub">IVA incluido, sin suscripciones. Precio de lanzamiento para las 50 primeras compras; después, 25 €.</p>
+    </div>
+    <div>
+      <p style="color:var(--muted);margin-bottom:18px">Descarga inmediata al pagar. Si no puedes descargarla o instalarla y no lo conseguimos arreglar, te devolvemos el dinero.</p>
+      <a class="btn buy" href="#precio">Comprar Palabra2Reel</a>
+      <p class="fine">Pago seguro con tarjeta o Google Pay.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="kicker">Preguntas frecuentes</p>
+    <h2>Lo que suelen preguntar.</h2>
+    <details><summary>¿Necesito saber programar?</summary><p>No. Instalas la skill siguiendo unos pasos y, a partir de ahí, le escribes a Claude Code una palabra, como «pulpo». Claude hace el resto y te enseña un storyboard para que digas «adelante».</p></details>
+    <details><summary>¿Cuánto tarda en hacer un reel?</summary><p>El montaje de un vídeo de un minuto tarda unos cinco minutos en nuestro ordenador. Antes, Claude investiga, escribe y dibuja; tú no pasas horas editando.</p></details>
+    <details><summary>¿Cuánto cuesta usarla, aparte de comprarla?</summary><p>La skill no tiene cuota. Usas tu plan de Claude, o tu clave de API, y si lo eliges, créditos de ElevenLabs. Con la voz gratis de edge-tts no hay coste extra.</p></details>
+    <details><summary>¿Puedo usar mis propios estilos y mi voz?</summary><p>Sí. Puedes crear estilos propios y usar cualquier voz de tu cuenta de ElevenLabs. La skill genera una página para escuchar voces y elegir de oído.</p></details>
+    <details><summary>¿Me garantizas visualizaciones?</summary><p>Nadie puede prometer alcance. Lo que sí tienes es todo lo que está en tu mano: ganchos pensados para frenar el scroll, el formato que mejor funciona en vertical, textos listos para cada plataforma y una guía para medir qué gana y repetirlo.</p></details>
+    <details><summary>¿Cómo la recibo y cómo se instala?</summary><p>Al pagar aparece la descarga al instante. Descomprimes el archivo y haces doble clic en el instalador (hay uno para Windows y otro para Mac): copia la skill a Claude Code y prepara lo necesario en un par de minutos. Después abres Claude Code y escribes «Prepara Palabra2Reel y hazme un reel de “pulpo”». Dentro del archivo hay una guía de una página, y preparamos un vídeo corto con los pasos.</p></details>
+    <details><summary>¿Y si no funciona?</summary><p>Escríbenos a <a href="mailto:hola@macvfx.es">hola@macvfx.es</a> o por mensaje directo a @cositas.ai en Instagram y lo arreglamos. Si no lo conseguimos, te devolvemos el dinero.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Palabra2Reel · <a href="legal.html#aviso">Aviso legal</a> · <a href="legal.html#privacidad">Privacidad</a> · <a href="legal.html#condiciones">Condiciones de compra</a></p>
+    <p style="margin-top:8px;max-width:44em">Palabra2Reel es un producto independiente. No está afiliado, patrocinado ni respaldado por Meta, Instagram, TikTok, YouTube, Anthropic ni ElevenLabs; los nombres son marcas de sus propietarios.</p>
+  </div>
+</footer>
+
+<div class="bar"><span><b>Palabra2Reel</b><br>19 € · pago único</span><a class="btn buy" href="#precio">Comprar</a></div>
+
+<script>
+// Enlace de compra: sustituir por la URL del producto (Polar…) y todos los botones apuntarán a ella.
+const BUY_URL = "https://buy.polar.sh/polar_cl_ZnOIga1fqdqxUUJoy1I1miUfrzsgmNwSGbFzp3UOtQ6";
+if (BUY_URL) document.querySelectorAll("a.buy").forEach((a) => { a.href = BUY_URL; });
+
+const v = document.getElementById("demo"), b = document.getElementById("snd");
+try { v.play().catch(() => {}); } catch (e) {}
+b.addEventListener("click", () => {
+  const sound = v.muted;
+  v.muted = !sound;
+  if (sound) v.currentTime = 0;
+  v.play();
+  b.textContent = sound ? "Silenciar" : "Activar sonido";
+});
+</script>
+</body>
+</html>
