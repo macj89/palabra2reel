@@ -22,7 +22,9 @@
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:76px}
+.hero>*,.two>*,.price>*,.gallery>*{min-width:0}
 a{color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 header{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:10}
