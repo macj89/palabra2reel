@@ -18,7 +18,7 @@
 <header>
   <div class="wrap">
     <a class="word" href="#">Palabra2Reel</a>
-    <nav aria-label="Navegación principal"><a class="hide-s" href="#ejemplos">Reels reales</a><a class="hide-s" href="#como">Cómo funciona</a><a class="hide-s" href="#faq">Preguntas</a><a class="btn sm buy" href="#precio">Comprar · 19 €</a></nav>
+    <nav aria-label="Navegación principal"><a class="hide-s" href="#ejemplos">Reels reales</a><a class="hide-s" href="#como">Cómo funciona</a><a class="hide-s" href="#faq">Preguntas</a><a class="btn sm buy" href="https://macvfx.gumroad.com/l/palabra2reel/LANZAMIENTO?wanted=true" aria-describedby="launch-tip">Comprar · 19 €</a></nav>
   </div>
 </header>
 
@@ -29,8 +29,9 @@
       <p class="kicker">Tu pequeño estudio de reels · Skill para Claude Code</p>
       <h1>Escribe una palabra.<br><span>Mira cómo se convierte en un reel.</span></h1>
       <p class="lead">Guion, ilustraciones, voz y montaje. Tú revisas el storyboard antes de generar el vídeo.</p>
-      <div class="actions"><a class="btn" href="#reel" data-play="demo">Ver un reel completo <span aria-hidden="true">↗</span></a><a class="btn line buy" href="#precio">Comprar · 19 €</a></div>
-      <p class="fine">Pago único · IVA incluido · Requiere Claude Code</p>
+      <div class="actions"><a class="btn" href="#reel" data-play="demo">Ver un reel completo <span aria-hidden="true">↗</span></a><a class="btn line buy" href="https://macvfx.gumroad.com/l/palabra2reel/LANZAMIENTO?wanted=true" aria-describedby="launch-tip">Comprar · 19 €</a></div>
+      <p class="launch-note">Código de lanzamiento: <strong>LANZAMIENTO</strong> · 19 € en las primeras 50 compras; después, 25 €.</p>
+      <p class="fine">Pago único · Requiere Claude Code. Comprueba el total con impuestos en Gumroad.</p>
     </div>
     <div class="studio" id="reel">
       <div class="studio-label"><span>De la idea al vídeo</span><span>Ejemplo real / 01</span></div>
@@ -96,11 +97,13 @@ fuentes.md</pre>
     <div>
       <p class="kicker">Precio</p>
       <div class="big">19 €<small>pago único</small></div>
-      <p class="sub">IVA incluido, sin suscripciones. Precio de lanzamiento para las 50 primeras compras; después, 25 €.</p>
+      <p class="sub">Sin suscripciones. Precio de lanzamiento para las 50 primeras compras; después, 25 €.</p>
     </div>
     <div>
       <p style="color:var(--muted);margin-bottom:18px">Descarga inmediata al pagar. Si no puedes descargarla o instalarla y no lo conseguimos arreglar, te devolvemos el dinero.</p>
-      <a class="btn buy" href="#precio">Comprar Palabra2Reel</a>
+      <a class="btn buy" href="https://macvfx.gumroad.com/l/palabra2reel/LANZAMIENTO?wanted=true" aria-describedby="launch-tip">Comprar Palabra2Reel</a>
+      <p class="launch-note">Usa <strong>LANZAMIENTO</strong>. El enlace aplica el código; si no aparece, introdúcelo en Gumroad.</p>
+      <details class="coupon-help"><summary>Copiar código y comprobar el precio</summary><p>19 € con el código en las primeras 50 compras; después, 25 €. Gumroad calcula los impuestos y muestra el total antes de pagar. Revisa el importe final.</p><button type="button" class="copy-code">Copiar LANZAMIENTO</button><span class="copy-status" role="status" aria-live="polite"></span></details>
       <p class="fine">Pago seguro con tarjeta o Google Pay.</p>
     </div>
   </div>
@@ -128,10 +131,31 @@ fuentes.md</pre>
   </div>
 </footer>
 
+<p id="launch-tip" class="launch-tip" role="tooltip" hidden>Código LANZAMIENTO · 19 € en las primeras 50 compras; después, 25 €. Revisa impuestos y total en Gumroad.</p>
 <script>
 // Enlace de compra: sustituir por la URL del producto (Gumroad…) y todos los botones apuntarán a ella.
-const BUY_URL = "https://macvfx.gumroad.com/l/palabra2reel?wanted=true";
+const BUY_URL = "https://macvfx.gumroad.com/l/palabra2reel/LANZAMIENTO?wanted=true";
 if (BUY_URL) document.querySelectorAll("a.buy").forEach((a) => { a.href = BUY_URL; });
+
+const tip = document.getElementById('launch-tip');
+let tipDismissed = false;
+function showTip(a) { if (tipDismissed) return; tip.hidden = false; const r = a.getBoundingClientRect(); tip.style.left = Math.max(12, Math.min(r.left, innerWidth - tip.offsetWidth - 12)) + 'px'; tip.style.top = Math.min(r.bottom + 8, innerHeight - tip.offsetHeight - 12) + 'px'; }
+function hideTip() { tip.hidden = true; }
+document.querySelectorAll('a.buy').forEach(a => {
+ a.addEventListener('pointerenter', e => { if(e.pointerType === 'mouse') {tipDismissed = false; showTip(a);} });
+ a.addEventListener('pointerleave', () => { if(!tip.matches(':hover')) hideTip(); });
+ a.addEventListener('focus', () => {tipDismissed = false; showTip(a);});
+ a.addEventListener('blur', hideTip);
+});
+tip.addEventListener('pointerleave', hideTip);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') {tipDismissed = true; hideTip();} });
+addEventListener('scroll', hideTip, {passive:true});
+addEventListener('resize', hideTip);
+document.querySelector('.copy-code').addEventListener('click', async () => {
+ const status = document.querySelector('.copy-status');
+ try { await navigator.clipboard.writeText('LANZAMIENTO'); status.textContent = ' Código copiado.'; }
+ catch { status.textContent = ' Copia el código: LANZAMIENTO.'; }
+});
 
 document.querySelectorAll('[data-play]').forEach(link => link.addEventListener('click', () => {
  const video = document.getElementById(link.dataset.play);
