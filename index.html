@@ -11,143 +11,43 @@
 <link rel="icon" href="media/logo-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#fbfaf7;--ink:#14161a;--muted:#5d626c;--line:#e4e1d9;--soft:#f2f0ea;--acc:#2a54e8;
-  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
-  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --gut:20px;
-}
-*{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth}
-html,body{overflow-x:clip}
-body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:76px}
-.hero>*,.two>*,.price>*,.gallery>*{min-width:0}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
-header{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:10}
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.word{font:600 18px var(--sans);letter-spacing:-.01em;text-decoration:none}
-nav{display:flex;gap:22px;align-items:center;font-size:15px;color:var(--muted)}
-nav a{text-decoration:none}
-nav a:hover{color:var(--ink)}
-nav .hide-s{display:none}
-.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:500 16px var(--sans);padding:13px 22px;border-radius:10px;text-decoration:none;border:1px solid var(--ink);cursor:pointer}
-.btn:hover{background:#2a2e36;color:#fff}
-.btn.sm{padding:8px 14px;font-size:14.5px;color:#fff}
-.btn.line{background:transparent;color:var(--ink);border-color:#c9c5ba}
-.btn.line:hover{background:var(--soft);color:var(--ink)}
-.hero{padding:48px 0 30px;display:grid;gap:40px}
-h1{font:400 clamp(44px,9vw,84px)/.98 var(--serif);letter-spacing:-.02em}
-.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:30em;margin:22px 0 28px}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.fine{font-size:14px;color:var(--muted);margin-top:16px}
-.phone{justify-self:start;width:min(270px,70vw);aspect-ratio:9/16;border-radius:26px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative}
-.phone video{width:100%;height:100%;object-fit:cover;display:block}
-.phone button{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);color:var(--ink);border:0;border-radius:999px;padding:7px 13px;font:500 13px var(--sans);cursor:pointer}
-section{padding:64px 0;border-top:1px solid var(--line)}
-.kicker{font:500 13px var(--mono);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
-h2{font:400 clamp(32px,5.4vw,50px)/1.04 var(--serif);letter-spacing:-.015em;max-width:16em}
-.sub{color:var(--muted);max-width:36em;margin-top:14px}
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:34px}
-.gallery figure img{width:100%;display:block;border-radius:14px;border:1px solid var(--line);aspect-ratio:9/16;object-fit:cover}
-.gallery figcaption{font-size:14px;color:var(--muted);margin-top:8px}
-.rows{margin-top:30px;border-top:1px solid var(--line)}
-.row{display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:20px 0;border-bottom:1px solid var(--line)}
-.row .n{font:500 14px var(--mono);color:var(--acc);padding-top:4px}
-.row h3{font:600 18px var(--sans);letter-spacing:-.01em}
-.row p{color:var(--muted);grid-column:2;max-width:42em}
-.two{display:grid;gap:34px}
-.list{border-top:1px solid var(--line)}
-.list li{list-style:none;padding:14px 0;border-bottom:1px solid var(--line)}
-.list b{font-weight:600}
-.list span{color:var(--muted)}
-pre{background:#14161a;color:#e9e7e1;border-radius:12px;padding:20px;font:14px/1.7 var(--mono);overflow:auto}
-pre i{color:#8f95a3;font-style:normal}
-.price{display:grid;gap:26px;align-items:start}
-.price .big{font:400 clamp(64px,12vw,104px)/1 var(--serif);letter-spacing:-.03em}
-.price .big small{font:400 17px var(--sans);color:var(--muted);letter-spacing:0;margin-left:8px}
-details{border-bottom:1px solid var(--line);padding:18px 0}
-details:first-of-type{border-top:1px solid var(--line);margin-top:28px}
-summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
-summary::after{content:"+";font:400 22px/1 var(--sans);color:var(--muted)}
-details[open] summary::after{content:"–"}
-details p{color:var(--muted);margin-top:10px;max-width:44em}
-footer{border-top:1px solid var(--line);padding:28px 0 36px;font-size:14px;color:var(--muted)}
-footer a{color:var(--muted)}
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,250,247,.96);border-top:1px solid var(--line);padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
-.bar span{font-size:14px;color:var(--muted);line-height:1.3}
-.bar b{color:var(--ink);font-weight:600}
-@media(min-width:820px){
-  body{padding-bottom:0}.bar{display:none}
-  nav .hide-s{display:inline}
-  .hero{grid-template-columns:1.25fr .75fr;align-items:center;padding:84px 0 56px}
-  .phone{justify-self:end;width:290px}
-  .gallery{grid-template-columns:repeat(4,1fr)}
-  .two{grid-template-columns:.9fr 1.1fr;gap:56px}
-  .price{grid-template-columns:1fr 1fr;gap:56px}
-  .row{grid-template-columns:60px 240px 1fr}.row p{grid-column:3}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;650;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="studio.css">
 </head>
 <body>
 <header>
   <div class="wrap">
     <a class="word" href="#">Palabra2Reel</a>
-    <nav><a class="hide-s" href="#como">Cómo funciona</a><a class="hide-s" href="#faq">Preguntas</a><a class="btn sm buy" href="#precio">Comprar · 19 €</a></nav>
+    <nav aria-label="Navegación principal"><a class="hide-s" href="#ejemplos">Reels reales</a><a class="hide-s" href="#como">Cómo funciona</a><a class="hide-s" href="#faq">Preguntas</a><a class="btn sm buy" href="#precio">Comprar · 19 €</a></nav>
   </div>
 </header>
 
-<main>
+<a class="skip" href="#contenido">Saltar al contenido</a><main id="contenido">
 <div class="wrap">
   <div class="hero">
-    <div>
-      <h1>De una palabra a un reel terminado.</h1>
-      <p class="lead">Palabra2Reel es una skill para Claude Code. Investiga el tema, escribe el guion, dibuja la explicación, pone la voz y monta el vídeo vertical para Reels, TikTok y YouTube Shorts.</p>
-      <div class="actions">
-        <a class="btn buy" href="#precio">Comprar · 19 €</a>
-        <a class="btn line" href="#como">Ver cómo funciona</a>
-      </div>
-      <p class="fine">Pago único · IVA incluido · Español, inglés y portugués</p>
+    <div class="hero-copy">
+      <p class="kicker">Tu pequeño estudio de reels · Skill para Claude Code</p>
+      <h1>Escribe una palabra.<br><span>Mira cómo se convierte en un reel.</span></h1>
+      <p class="lead">Guion, ilustraciones, voz y montaje. Tú revisas el storyboard antes de generar el vídeo.</p>
+      <div class="actions"><a class="btn" href="#reel" data-play="demo">Ver un reel completo <span aria-hidden="true">↗</span></a><a class="btn line buy" href="#precio">Comprar · 19 €</a></div>
+      <p class="fine">Pago único · IVA incluido · Requiere Claude Code</p>
     </div>
-    <div class="phone">
-      <video id="demo" src="media/demo.mp4" poster="media/demo-poster.jpg" muted loop playsinline preload="metadata" aria-label="Reel de demostración hecho con la skill"></video>
-      <button id="snd" type="button">Activar sonido</button>
+    <div class="studio" id="reel">
+      <div class="studio-label"><span>De la idea al vídeo</span><span>Ejemplo real / 01</span></div>
+      <div class="studio-work">
+        <div class="idea"><span class="kicker">La palabra</span><strong>«Pulpo»</strong><span class="flow-arrow" aria-hidden="true">↘</span><p>Tres corazones.<br>Una historia que contar.</p><a href="#storyboard">Ver el storyboard →</a></div>
+        <figure class="finished"><video id="demo" controls playsinline preload="none" poster="media/g-pulpo.jpg" aria-label="Reel completo: el pulpo y sus tres corazones"><source src="media/reel-pulpo.mp4" type="video/mp4"></video><figcaption>El resultado · Reel completo con voz</figcaption></figure>
+      </div>
+      <p class="studio-note">Ilustración, subtítulos y sonido. Esto es el resultado, no un simulador.</p>
     </div>
   </div>
 </div>
-
-<section>
-  <div class="wrap">
-    <p class="kicker">Hecho con la skill</p>
-    <h2>Estos reels salieron de una palabra.</h2>
-    <p class="sub">Pulpo, avión, microondas, cebolla, olla exprés, hielo. Están publicados en @cositas.ai, con su voz, sus subtítulos y su sonido.</p>
-    <div class="gallery">
-      <figure><img src="media/g-pulpo.jpg" alt="Reel sobre el pulpo" loading="lazy"><figcaption>«Pulpo»</figcaption></figure>
-      <figure><img src="media/g-avion.jpg" alt="Reel sobre las ventanillas de los aviones" loading="lazy"><figcaption>«Avión»</figcaption></figure>
-      <figure><img src="media/g-microondas.jpg" alt="Reel sobre el microondas" loading="lazy"><figcaption>«Microondas»</figcaption></figure>
-      <figure><img src="media/g-cebolla.jpg" alt="Reel sobre la cebolla" loading="lazy"><figcaption>«Cebolla»</figcaption></figure>
-    </div>
-  </div>
+<section id="ejemplos">
+ <div class="wrap examples-layout"><div><p class="kicker">Hechos con Palabra2Reel</p><h2>Una palabra.<br>Una historia distinta.</h2><p class="sub">Tres ejemplos reales. Dale al play y escucha el resultado.</p><p class="fine">El pulpo está en la demostración de arriba.</p><a class="text-link" href="#reel" data-play="demo">Volver a «Pulpo» ↗</a></div>
+ <div class="example-pair"><figure><video controls playsinline preload="none" poster="media/g-avion.jpg" aria-label="Reel completo sobre las ventanillas de los aviones"><source src="media/reel-avion.mp4" type="video/mp4"></video><figcaption><span>02 / Avión</span><strong>¿Por qué las ventanillas son redondas?</strong></figcaption></figure><figure><video controls playsinline preload="none" poster="media/g-microondas.jpg" aria-label="Reel completo sobre el microondas"><source src="media/reel-microondas.mp4" type="video/mp4"></video><figcaption><span>03 / Microondas</span><strong>Lo cotidiano también tiene su historia.</strong></figcaption></figure></div></div>
 </section>
-
-<section id="como">
-  <div class="wrap">
-    <p class="kicker">Cómo funciona</p>
-    <h2>Seis pasos, y solo das el visto bueno al storyboard.</h2>
-    <div class="rows">
-      <div class="row"><span class="n">01</span><h3>Escribes una palabra</h3><p>«Pulpo», «cebolla», «tu cafetera». Sin guion previo ni plantillas que rellenar.</p></div>
-      <div class="row"><span class="n">02</span><h3>Busca y guarda las fuentes</h3><p>Rastrea la web, elige el ángulo que mejor se explica dibujado y anota la fuente de cada dato.</p></div>
-      <div class="row"><span class="n">03</span><h3>Ganchos y guion</h3><p>Escribe cuatro ganchos, elige el que más frena el scroll y redacta el guion de 45 a 90 segundos.</p></div>
-      <div class="row"><span class="n">04</span><h3>Dibuja y anima</h3><p>Ilustra el tema en vectores y mueve cada pieza justo cuando la voz la nombra. Agua, fuego o tentáculos se animan solos.</p></div>
-      <div class="row"><span class="n">05</span><h3>Voz y subtítulos</h3><p>Voz gratis o de ElevenLabs, subtítulos palabra a palabra y efectos de sonido.</p></div>
-      <div class="row"><span class="n">06</span><h3>Control de calidad y entrega</h3><p>Revisa formato, audio, imagen congelada y el primer segundo. Te entrega el MP4, la portada, los textos y las fuentes.</p></div>
-    </div>
-  </div>
-</section>
+<section id="como"><div class="wrap"><p class="kicker">De tu idea a la publicación</p><h2>Escribes. Revisas. Publicas.</h2><div class="process"><article><span>01 / La idea</span><h3>Escribes una palabra.</h3><p>Claude investiga el tema, guarda las fuentes y prepara el guion y las ilustraciones.</p></article><article><span>02 / Tu criterio</span><h3>Revisas el storyboard.</h3><p>Ves la historia antes del montaje. Pides cambios y das el visto bueno para generar.</p></article><article><span>03 / El resultado</span><h3>Lo tienes para publicar.</h3><p>Recibes el MP4 vertical con voz y subtítulos, la portada, los textos y las fuentes.</p></article></div>
+<div class="storyboard" id="storyboard"><div><p class="kicker">Dentro del proceso</p><h3>Antes del reel,<br>la historia en imágenes.</h3><p>Hoja de storyboard real del proyecto «Pulpo». No es una interfaz inventada.</p><a class="text-link" href="#reel" data-play="demo">Comparar con el reel terminado ↗</a></div><a href="media/pulpo-storyboard.jpg" aria-label="Abrir storyboard real del pulpo a tamaño completo"><img src="media/pulpo-storyboard.jpg" alt="Hoja real de escenas ilustradas del storyboard del pulpo" loading="lazy"></a></div></div></section>
 
 <section>
   <div class="wrap two">
@@ -228,21 +128,18 @@ fuentes.md</pre>
   </div>
 </footer>
 
-<div class="bar"><span><b>Palabra2Reel</b><br>19 € · pago único</span><a class="btn buy" href="#precio">Comprar</a></div>
-
 <script>
 // Enlace de compra: sustituir por la URL del producto (Gumroad…) y todos los botones apuntarán a ella.
 const BUY_URL = "https://macvfx.gumroad.com/l/palabra2reel?wanted=true";
 if (BUY_URL) document.querySelectorAll("a.buy").forEach((a) => { a.href = BUY_URL; });
 
-const v = document.getElementById("demo"), b = document.getElementById("snd");
-try { v.play().catch(() => {}); } catch (e) {}
-b.addEventListener("click", () => {
-  const sound = v.muted;
-  v.muted = !sound;
-  if (sound) v.currentTime = 0;
-  v.play();
-  b.textContent = sound ? "Silenciar" : "Activar sonido";
+document.querySelectorAll('[data-play]').forEach(link => link.addEventListener('click', () => {
+ const video = document.getElementById(link.dataset.play);
+ video.play().catch(() => { video.focus(); });
+}));
+document.querySelectorAll('video').forEach(video => {
+ video.addEventListener('play', () => document.querySelectorAll('video').forEach(other => { if(other !== video) other.pause(); }));
+ video.addEventListener('error', () => { const note=document.createElement('p'); note.className='media-error'; note.textContent='No se pudo cargar el vídeo. Recarga la página para intentarlo de nuevo.'; video.after(note); }, {once:true});
 });
 </script>
 </body>
