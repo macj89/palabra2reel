@@ -165,6 +165,13 @@ document.querySelectorAll('video').forEach(video => {
  video.addEventListener('play', () => document.querySelectorAll('video').forEach(other => { if(other !== video) other.pause(); }));
  video.addEventListener('error', () => { const note=document.createElement('p'); note.className='media-error'; note.textContent='No se pudo cargar el vídeo. Recarga la página para intentarlo de nuevo.'; video.after(note); }, {once:true});
 });
+
+// Medición sin cookies (GoatCounter): visitas, clics en «Comprar» y reproducciones de los vídeos
+function gc(path, title) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path, title, event: true }); } catch (e) {} }
+document.querySelectorAll('a.buy').forEach(a => a.addEventListener('click', () => gc('clic-comprar', 'Clic en Comprar')));
+document.querySelectorAll('video').forEach((video, i) => video.addEventListener('play', () => gc('play-' + (video.id || 'video-' + i), 'Reproduce un vídeo'), { once: true }));
+document.querySelector('.copy-code')?.addEventListener('click', () => gc('copia-codigo', 'Copia el código'));
 </script>
+<script data-goatcounter="https://palabra2reel.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
