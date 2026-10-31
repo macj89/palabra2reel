@@ -166,12 +166,15 @@ document.querySelectorAll('video').forEach(video => {
  video.addEventListener('error', () => { const note=document.createElement('p'); note.className='media-error'; note.textContent='No se pudo cargar el vídeo. Recarga la página para intentarlo de nuevo.'; video.after(note); }, {once:true});
 });
 
-// Medición sin cookies (GoatCounter): visitas, clics en «Comprar» y reproducciones de los vídeos
-function gc(path, title) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path, title, event: true }); } catch (e) {} }
-document.querySelectorAll('a.buy').forEach(a => a.addEventListener('click', () => gc('clic-comprar', 'Clic en Comprar')));
-document.querySelectorAll('video').forEach((video, i) => video.addEventListener('play', () => gc('play-' + (video.id || 'video-' + i), 'Reproduce un vídeo'), { once: true }));
-document.querySelector('.copy-code')?.addEventListener('click', () => gc('copia-codigo', 'Copia el código'));
+// Medición sin cookies: contadores anónimos (no se guarda nada del visitante, solo se suma 1)
+function cuenta(clave) { try { fetch('https://abacus.jasoncameron.dev/hit/palabra2reel-cositas/' + clave, { keepalive: true }); } catch (e) {} }
+if (!/[?&]test=/.test(location.search)) {
+ cuenta('visitas');
+ if (/instagram|facebook|fbclid|utm_source=ig/i.test(document.referrer + location.search)) cuenta('visitas-instagram');
+}
+document.querySelectorAll('a.buy').forEach(a => a.addEventListener('click', () => cuenta('clic-comprar')));
+document.querySelectorAll('video').forEach(video => video.addEventListener('play', () => cuenta('play-demo'), { once: true }));
+document.querySelector('.copy-code')?.addEventListener('click', () => cuenta('copia-codigo'));
 </script>
-<script data-goatcounter="https://palabra2reel.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
